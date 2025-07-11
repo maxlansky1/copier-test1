@@ -1,0 +1,674 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Исходный код &mdash; документация projectTemplate 0.1</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=490fdf2e"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="_static/copybutton.js?v=f281be69"></script>
+      <script src="_static/translations.js?v=cd1d70c9"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="next" title="Руководство по написанию коммитов" href="commit_style_guide.html" />
+    <link rel="prev" title="Описание" href="readme.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            projectTemplate
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="readme.html">Описание</a></li>
+<li class="toctree-l1"><a class="reference internal" href="readme.html#id2">Установка</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Исходный код</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-src.main">src/main.py</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.main.main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src-utils">📁 src/utils/</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-src.utils.logger">src/utils/logger.py</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#src.utils.logger.LOGS_DIR"><code class="docutils literal notranslate"><span class="pre">LOGS_DIR</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.utils.logger.LOG_FORMAT"><code class="docutils literal notranslate"><span class="pre">LOG_FORMAT</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.utils.logger.DATE_FORMAT"><code class="docutils literal notranslate"><span class="pre">DATE_FORMAT</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#src.utils.logger.ColoredFormatter"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#src.utils.logger.ColoredFormatter.COLORS"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.COLORS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id0"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.COLORS</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#src.utils.logger.ColoredFormatter.format"><code class="docutils literal notranslate"><span class="pre">ColoredFormatter.format()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#src.utils.logger.get_logger"><code class="docutils literal notranslate"><span class="pre">get_logger()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configs">📁 configs/</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#configs-config-py">configs/config.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-configs.path_manager">configs/path_manager.py</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#configs.path_manager.ensure_directories"><code class="docutils literal notranslate"><span class="pre">ensure_directories()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#configs.path_manager.print_project_paths"><code class="docutils literal notranslate"><span class="pre">print_project_paths()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tools">📁 tools/</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tools.diagram_auto_update">tools/diagram_auto_update.py</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tools.diagram_auto_update.build_container_definitions"><code class="docutils literal notranslate"><span class="pre">build_container_definitions()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tools.diagram_auto_update.get_changed_files"><code class="docutils literal notranslate"><span class="pre">get_changed_files()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tools.diagram_auto_update.write_container_block"><code class="docutils literal notranslate"><span class="pre">write_container_block()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tools.diagram_auto_update.write_temp_puml"><code class="docutils literal notranslate"><span class="pre">write_temp_puml()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-tools.print_structure">tools/print_structure.py</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#tools.print_structure.print_tree"><code class="docutils literal notranslate"><span class="pre">print_tree()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tools.print_structure.should_ignore"><code class="docutils literal notranslate"><span class="pre">should_ignore()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tests">📁 tests/</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#id2">🛠 Конфигурационные файлы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="commit_style_guide.html">Руководство по написанию коммитов</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">projectTemplate</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Исходный код</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/src.rst.txt" rel="nofollow"> Просмотреть исходный код страницы</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="id1">
+<h1>Исходный код<a class="headerlink" href="#id1" title="Ссылка на этот заголовок"></a></h1>
+<section id="module-src.main">
+<span id="src-main-py"></span><h2>src/main.py<a class="headerlink" href="#module-src.main" title="Ссылка на этот заголовок"></a></h2>
+<p>Точка входа — главный запуск приложения.</p>
+<p>Этот модуль содержит точку входа в приложение и вызывает основную функцию main().</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.main.main">
+<span class="sig-prename descclassname"><span class="pre">src.main.</span></span><span class="sig-name descname"><span class="pre">main</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/main.html#main"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#src.main.main" title="Ссылка на это определение"></a></dt>
+<dd><p>Запускает приложение.</p>
+<p>Логирует сообщения разных уровней и выводит тестовый текст через print().</p>
+</dd></dl>
+
+<section id="src-utils">
+<h3>📁 src/utils/<a class="headerlink" href="#src-utils" title="Ссылка на этот заголовок"></a></h3>
+</section>
+</section>
+<section id="module-src.utils.logger">
+<span id="src-utils-logger-py"></span><h2>src/utils/logger.py<a class="headerlink" href="#module-src.utils.logger" title="Ссылка на этот заголовок"></a></h2>
+<p>Модуль для настройки кастомного логгера.</p>
+<p>Обеспечивает цветной вывод в консоль и запись логов в файлы.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.utils.logger.LOGS_DIR">
+<span class="sig-prename descclassname"><span class="pre">src.utils.logger.</span></span><span class="sig-name descname"><span class="pre">LOGS_DIR</span></span><a class="headerlink" href="#src.utils.logger.LOGS_DIR" title="Ссылка на это определение"></a></dt>
+<dd><p>Путь к директории, где будут сохраняться лог-файлы.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.utils.logger.LOG_FORMAT">
+<span class="sig-prename descclassname"><span class="pre">src.utils.logger.</span></span><span class="sig-name descname"><span class="pre">LOG_FORMAT</span></span><a class="headerlink" href="#src.utils.logger.LOG_FORMAT" title="Ссылка на это определение"></a></dt>
+<dd><p>Формат строки лога.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.utils.logger.DATE_FORMAT">
+<span class="sig-prename descclassname"><span class="pre">src.utils.logger.</span></span><span class="sig-name descname"><span class="pre">DATE_FORMAT</span></span><a class="headerlink" href="#src.utils.logger.DATE_FORMAT" title="Ссылка на это определение"></a></dt>
+<dd><p>Формат даты и времени в логах.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="src.utils.logger.ColoredFormatter">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.utils.logger.</span></span><span class="sig-name descname"><span class="pre">ColoredFormatter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">fmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">datefmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">style</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'%'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">validate</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="keyword-only-separator o"><abbr title="Keyword-only parameters separator (PEP 3102)"><span class="pre">*</span></abbr></span></em>, <em class="sig-param"><span class="n"><span class="pre">defaults</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils/logger.html#ColoredFormatter"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#src.utils.logger.ColoredFormatter" title="Ссылка на это определение"></a></dt>
+<dd><p>Базовые классы: <code class="xref py py-class docutils literal notranslate"><span class="pre">Formatter</span></code></p>
+<p>Цветной форматтер для вывода логов в консоль.</p>
+<p>Класс расширяет стандартный <cite>logging.Formatter</cite>, добавляя цветовое оформление
+в зависимости от уровня логирования. Поддерживаются уровни DEBUG, INFO,
+WARNING, ERROR и CRITICAL.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.utils.logger.ColoredFormatter.COLORS">
+<span class="sig-name descname"><span class="pre">COLORS</span></span><a class="headerlink" href="#src.utils.logger.ColoredFormatter.COLORS" title="Ссылка на это определение"></a></dt>
+<dd><p>Сопоставление уровней логирования с цветами из библиотеки colorama.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="id0">
+<span class="sig-name descname"><span class="pre">COLORS</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">{'CRITICAL':</span> <span class="pre">'\x1b[41m\x1b[37m\x1b[1m',</span> <span class="pre">'DEBUG':</span> <span class="pre">'\x1b[36m',</span> <span class="pre">'ERROR':</span> <span class="pre">'\x1b[31m',</span> <span class="pre">'INFO':</span> <span class="pre">'\x1b[32m',</span> <span class="pre">'WARNING':</span> <span class="pre">'\x1b[33m'}</span></em><a class="headerlink" href="#id0" title="Ссылка на это определение"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="src.utils.logger.ColoredFormatter.format">
+<span class="sig-name descname"><span class="pre">format</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">record</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils/logger.html#ColoredFormatter.format"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#src.utils.logger.ColoredFormatter.format" title="Ссылка на это определение"></a></dt>
+<dd><p>Форматирует запись лога, применяя цвет в зависимости от уровня.</p>
+<p>Цвет устанавливается перед вызовом базового метода <cite>format()</cite> родительского класса.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>record</strong> (<em>logging.LogRecord</em>) – Объект записи лога.</p>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>Отформатированная строка лога с цветовым выделением.</p>
+</dd>
+<dt class="field-odd">Тип результата<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="src.utils.logger.get_logger">
+<span class="sig-prename descclassname"><span class="pre">src.utils.logger.</span></span><span class="sig-name descname"><span class="pre">get_logger</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/utils/logger.html#get_logger"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#src.utils.logger.get_logger" title="Ссылка на это определение"></a></dt>
+<dd><p>Возвращает настроенный логгер с указанным именем.</p>
+<p>Создаёт и настраивает логгер, который выводит сообщения в консоль с цветовой
+индикацией уровня логирования и записывает информационные и более серьёзные
+сообщения в файл.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em><em>, </em><em>optional</em>) – Имя логгера. Если не указано, возвращается корневой логгер.</p>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>Настроенный экземпляр логгера.</p>
+</dd>
+<dt class="field-odd">Тип результата<span class="colon">:</span></dt>
+<dd class="field-odd"><p>logging.Logger</p>
+</dd>
+</dl>
+</dd></dl>
+
+<section id="configs">
+<h3>📁 configs/<a class="headerlink" href="#configs" title="Ссылка на этот заголовок"></a></h3>
+</section>
+</section>
+<section id="configs-config-py">
+<h2>configs/config.py<a class="headerlink" href="#configs-config-py" title="Ссылка на этот заголовок"></a></h2>
+</section>
+<section id="module-configs.path_manager">
+<span id="configs-path-manager-py"></span><h2>configs/path_manager.py<a class="headerlink" href="#module-configs.path_manager" title="Ссылка на этот заголовок"></a></h2>
+<p>Модуль path_manager предоставляет централизованный доступ ко всем ключевым путям проекта.</p>
+<p>Все пути представлены как объекты Path из библиотеки pathlib для переносимости и удобства.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="configs.path_manager.ensure_directories">
+<span class="sig-prename descclassname"><span class="pre">configs.path_manager.</span></span><span class="sig-name descname"><span class="pre">ensure_directories</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/configs/path_manager.html#ensure_directories"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#configs.path_manager.ensure_directories" title="Ссылка на это определение"></a></dt>
+<dd><p>Создаёт необходимые директории, если они отсутствуют.</p>
+<p>Выводит информационное сообщение в stdout.</p>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="configs.path_manager.print_project_paths">
+<span class="sig-prename descclassname"><span class="pre">configs.path_manager.</span></span><span class="sig-name descname"><span class="pre">print_project_paths</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/configs/path_manager.html#print_project_paths"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#configs.path_manager.print_project_paths" title="Ссылка на это определение"></a></dt>
+<dd><p>Выводит все определённые пути в терминал для дебага и проверки.</p>
+<dl class="simple">
+<dt>Outputs:</dt><dd><p>Выводит в stdout список всех путей, определённых как глобальные переменные
+в верхнем регистре, которые являются экземплярами Path.</p>
+</dd>
+<dt>Format:</dt><dd><p>Вывод включает разделители «===» перед и после списка путей.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<section id="tools">
+<h3>📁 tools/<a class="headerlink" href="#tools" title="Ссылка на этот заголовок"></a></h3>
+</section>
+</section>
+<section id="module-tools.diagram_auto_update">
+<span id="tools-diagram-auto-update-py"></span><h2>tools/diagram_auto_update.py<a class="headerlink" href="#module-tools.diagram_auto_update" title="Ссылка на этот заголовок"></a></h2>
+<p>Модуль для автоматического обновления диаграммы зависимостей.</p>
+<p>Скрипт анализирует новые файлы в репозитории и генерирует PlantUML диаграмму,
+отображающую структуру проекта с возможностью перехода к файлам через vscode:// ссылки.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="tools.diagram_auto_update.build_container_definitions">
+<span class="sig-prename descclassname"><span class="pre">tools.diagram_auto_update.</span></span><span class="sig-name descname"><span class="pre">build_container_definitions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">added_files</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tools/diagram_auto_update.html#build_container_definitions"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#tools.diagram_auto_update.build_container_definitions" title="Ссылка на это определение"></a></dt>
+<dd><p>Обрабатывает список добавленных файлов и возвращает определения для диаграммы.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>added_files</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Список относительных путей к добавленным файлам.</p>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Кортеж содержащий:</dt><dd><ul class="simple">
+<li><p>Список строк с определениями vscode-ссылок</p></li>
+<li><p>Словарь с иерархией папок и файлов для генерации PlantUML</p></li>
+</ul>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Тип результата<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[List[str], Dict]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tools.diagram_auto_update.get_changed_files">
+<span class="sig-prename descclassname"><span class="pre">tools.diagram_auto_update.</span></span><span class="sig-name descname"><span class="pre">get_changed_files</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/tools/diagram_auto_update.html#get_changed_files"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#tools.diagram_auto_update.get_changed_files" title="Ссылка на это определение"></a></dt>
+<dd><p>Получает список новых (неотслеживаемых) файлов в репозитории Git.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Результат<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Список относительных путей к новым файлам.</p>
+</dd>
+<dt class="field-even">Тип результата<span class="colon">:</span></dt>
+<dd class="field-even"><p>List[str]</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Примечание</p>
+<p>Использует <cite>git ls-files –others –exclude-standard</cite> для получения списка файлов.
+Валидация пути выполняется в вызывающем коде.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tools.diagram_auto_update.write_container_block">
+<span class="sig-prename descclassname"><span class="pre">tools.diagram_auto_update.</span></span><span class="sig-name descname"><span class="pre">write_container_block</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">content</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">indent</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tools/diagram_auto_update.html#write_container_block"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#tools.diagram_auto_update.write_container_block" title="Ссылка на это определение"></a></dt>
+<dd><p>Рекурсивно записывает блок Container_Boundary и файлы внутри него.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>f</strong> – Файловый объект для записи.</p></li>
+<li><p><strong>name</strong> (<em>str</em>) – Имя текущего контейнера.</p></li>
+<li><p><strong>content</strong> (<em>Dict</em>) – Содержимое контейнера (подпапки и файлы).</p></li>
+<li><p><strong>indent</strong> (<em>int</em>) – Уровень отступа для форматирования.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tools.diagram_auto_update.write_temp_puml">
+<span class="sig-prename descclassname"><span class="pre">tools.diagram_auto_update.</span></span><span class="sig-name descname"><span class="pre">write_temp_puml</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">defines</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boundaries</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tools/diagram_auto_update.html#write_temp_puml"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#tools.diagram_auto_update.write_temp_puml" title="Ссылка на это определение"></a></dt>
+<dd><p>Генерирует временный .puml файл с определениями ссылок и иерархией компонентов.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>defines</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – Список определений vscode-ссылок.</p></li>
+<li><p><strong>boundaries</strong> (<em>Dict</em>) – Иерархия папок и файлов проекта.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-tools.print_structure">
+<span id="tools-print-structure-py"></span><h2>tools/print_structure.py<a class="headerlink" href="#module-tools.print_structure" title="Ссылка на этот заголовок"></a></h2>
+<p>Вывод структуры проекта в консоль в виде дерева каталогов.</p>
+<p>Модуль предоставляет функции для рекурсивного обхода директорий проекта
+и красивого вывода его структуры с фильтрацией служебных файлов и папок.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="tools.print_structure.print_tree">
+<span class="sig-prename descclassname"><span class="pre">tools.print_structure.</span></span><span class="sig-name descname"><span class="pre">print_tree</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">start_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">prefix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tools/print_structure.html#print_tree"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#tools.print_structure.print_tree" title="Ссылка на это определение"></a></dt>
+<dd><p>Рекурсивно выводит структуру каталогов в виде ASCII-дерева.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>start_path</strong> (<em>str</em>) – Путь к корневой директории для вывода.</p></li>
+<li><p><strong>prefix</strong> (<em>str</em>) – Префикс для отступов (используется при рекурсивных вызовах).</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Side Effects:</dt><dd><p>Выводит в stdout дерево каталогов с использованием символов псевдографики.</p>
+</dd>
+</dl>
+<div class="admonition note">
+<p class="admonition-title">Примечание</p>
+<p>Автоматически обрабатывает ошибки доступа к директориям.</p>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="tools.print_structure.should_ignore">
+<span class="sig-prename descclassname"><span class="pre">tools.print_structure.</span></span><span class="sig-name descname"><span class="pre">should_ignore</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">is_dir</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/tools/print_structure.html#should_ignore"><span class="viewcode-link"><span class="pre">[исходный</span> <span class="pre">код]</span></span></a><a class="headerlink" href="#tools.print_structure.should_ignore" title="Ссылка на это определение"></a></dt>
+<dd><p>Определяет, нужно ли игнорировать файл или директорию при выводе.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Параметры<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Имя файла или директории.</p></li>
+<li><p><strong>is_dir</strong> (<em>bool</em>) – Флаг, указывающий является ли элемент директорией.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Результат<span class="colon">:</span></dt>
+<dd class="field-even"><p>True если элемент нужно игнорировать, False если нужно включить в вывод.</p>
+</dd>
+<dt class="field-odd">Тип результата<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<section id="tests">
+<h3>📁 tests/<a class="headerlink" href="#tests" title="Ссылка на этот заголовок"></a></h3>
+</section>
+</section>
+</section>
+<section id="id2">
+<h1>🛠 Конфигурационные файлы<a class="headerlink" href="#id2" title="Ссылка на этот заголовок"></a></h1>
+<div class="literal-block-wrapper docutils container" id="id3">
+<div class="code-block-caption"><span class="caption-text">Dockerfile</span><a class="headerlink" href="#id3" title="Ссылка на этот код"></a></div>
+<div class="highlight-docker notranslate"><div class="highlight"><pre><span></span><span class="k">FROM</span><span class="w"> </span><span class="s">python:3.12-slim</span>
+
+<span class="c"># Устанавливаем локали (без вывода предупреждений)</span>
+<span class="k">RUN</span><span class="w"> </span>apt-get<span class="w"> </span>update<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>apt-get<span class="w"> </span>install<span class="w"> </span>-y<span class="w"> </span>locales<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;en_US.UTF-8 UTF-8&quot;</span><span class="w"> </span>&gt;<span class="w"> </span>/etc/locale.gen<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>locale-gen<span class="w"> </span>en_US.UTF-8<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>apt-get<span class="w"> </span>clean<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>rm<span class="w"> </span>-rf<span class="w"> </span>/var/lib/apt/lists/*
+
+<span class="c"># Устанавливаем переменные окружения для локалей</span>
+<span class="k">ENV</span><span class="w"> </span>LANG<span class="w"> </span>en_US.UTF-8
+<span class="k">ENV</span><span class="w"> </span>LANGUAGE<span class="w"> </span>en_US:en
+<span class="k">ENV</span><span class="w"> </span>LC_ALL<span class="w"> </span>en_US.UTF-8
+
+<span class="c"># Устанавливаем PYTHONPATH и PATH</span>
+<span class="k">ENV</span><span class="w"> </span>PYTHONPATH<span class="w"> </span>/app
+<span class="k">ENV</span><span class="w"> </span>PATH<span class="w"> </span>/home/appuser/.local/bin:<span class="nv">$PATH</span>
+
+<span class="c"># Устанавливаем рабочую директорию</span>
+<span class="k">WORKDIR</span><span class="w"> </span><span class="s">/app</span>
+
+<span class="c"># Создаём пользователя ДО установки зависимостей</span>
+<span class="k">RUN</span><span class="w"> </span>useradd<span class="w"> </span>-m<span class="w"> </span>appuser
+
+<span class="c"># Копируем requirements</span>
+<span class="k">COPY</span><span class="w"> </span>requirements.txt<span class="w"> </span>.
+
+<span class="c"># Устанавливаем зависимости от root</span>
+<span class="k">RUN</span><span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>--upgrade<span class="w"> </span>pip<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>pip<span class="w"> </span>install<span class="w"> </span>--no-cache-dir<span class="w"> </span>-r<span class="w"> </span>requirements.txt
+
+<span class="c"># Копируем исходный код</span>
+<span class="k">COPY</span><span class="w"> </span>.<span class="w"> </span>.
+
+<span class="c"># Даём права пользователю на всё содержимое</span>
+<span class="k">RUN</span><span class="w"> </span>chown<span class="w"> </span>-R<span class="w"> </span>appuser:appuser<span class="w"> </span>/app<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+<span class="w">    </span>chmod<span class="w"> </span>+x<span class="w"> </span>/app/src/main.py
+
+<span class="c"># Переключаемся на пользователя</span>
+<span class="k">USER</span><span class="w"> </span><span class="s">appuser</span>
+
+<span class="c"># Проверка состояния контейнера</span>
+<span class="k">HEALTHCHECK</span><span class="w"> </span>--interval<span class="o">=</span>30s<span class="w"> </span>--timeout<span class="o">=</span>5s<span class="w"> </span>--retries<span class="o">=</span><span class="m">3</span><span class="w"> </span><span class="se">\</span>
+<span class="w">  </span><span class="k">CMD</span><span class="w"> </span>curl<span class="w"> </span>-f<span class="w"> </span>http://localhost:8000/health<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="nb">exit</span><span class="w"> </span><span class="m">1</span>
+
+<span class="c"># Запуск приложения</span>
+<span class="k">CMD</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;python&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;-m&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;src.main&quot;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id4">
+<div class="code-block-caption"><span class="caption-text">docker-compose.yaml</span><a class="headerlink" href="#id4" title="Ссылка на этот код"></a></div>
+<div class="highlight-yaml notranslate"><div class="highlight"><pre><span></span><span class="c1">#docker-compose.yaml</span>
+
+<span class="nt">version</span><span class="p">:</span><span class="w"> </span><span class="s">&#39;3.9&#39;</span>
+
+<span class="nt">services</span><span class="p">:</span>
+<span class="w">  </span><span class="nt">app</span><span class="p">:</span>
+<span class="w">    </span><span class="nt">build</span><span class="p">:</span>
+<span class="w">      </span><span class="nt">context</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.</span><span class="w">             </span><span class="c1"># Dockerfile в текущей директории</span>
+<span class="w">      </span><span class="nt">dockerfile</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">Dockerfile</span>
+
+<span class="w">    </span><span class="nt">command</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">python src/main.py</span><span class="w">  </span><span class="c1"># можно переопределить стандартный CMD</span>
+
+<span class="w">    </span><span class="nt">volumes</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.:/app</span><span class="w">               </span><span class="c1"># монтируем исходный код (удобно при разработке)</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">./logs:/app/logs</span><span class="w">     </span><span class="c1"># том для логов</span>
+
+<span class="w">    </span><span class="nt">env_file</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">.env</span><span class="w">                 </span><span class="c1"># переменные окружения (токены, настройки)</span>
+
+<span class="w">    </span><span class="nt">ports</span><span class="p">:</span>
+<span class="w">      </span><span class="p p-Indicator">-</span><span class="w"> </span><span class="s">&quot;8000:8000&quot;</span><span class="w">          </span><span class="c1"># проброс портов, если нужен API</span>
+
+<span class="w">    </span><span class="nt">restart</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">unless-stopped</span><span class="w">  </span><span class="c1"># автоперезапуск контейнера при сбоях</span>
+
+<span class="w">    </span><span class="nt">tty</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">                </span><span class="c1"># для корректной работы логов и bash-сессии</span>
+<span class="w">    </span><span class="nt">stdin_open</span><span class="p">:</span><span class="w"> </span><span class="l l-Scalar l-Scalar-Plain">true</span><span class="w">         </span><span class="c1"># возможность docker attach</span>
+
+<span class="w">    </span><span class="c1"># depends_on:</span>
+<span class="w">    </span><span class="c1">#   - db                 # зависимости от других сервисов, если будут</span>
+
+<span class="c1"># Пример для базы данных PostgreSQL (если понадобится)</span>
+<span class="c1"># db:</span>
+<span class="c1">#   image: postgres:15</span>
+<span class="c1">#   restart: unless-stopped</span>
+<span class="c1">#   environment:</span>
+<span class="c1">#     POSTGRES_USER: youruser</span>
+<span class="c1">#     POSTGRES_PASSWORD: yourpassword</span>
+<span class="c1">#     POSTGRES_DB: yourdb</span>
+<span class="c1">#   volumes:</span>
+<span class="c1">#     - pgdata:/var/lib/postgresql/data</span>
+
+<span class="c1"># volumes:</span>
+<span class="c1">#   pgdata:</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id5">
+<div class="code-block-caption"><span class="caption-text">Makefile</span><a class="headerlink" href="#id5" title="Ссылка на этот код"></a></div>
+<div class="highlight-make notranslate"><div class="highlight"><pre><span></span><span class="c"># ================================</span>
+<span class="c"># 🛠️ Makefile для Telegram-бота</span>
+<span class="c"># ================================</span>
+
+<span class="c"># Указывает, какой файл docker-compose используется</span>
+<span class="nv">COMPOSE_FILE</span><span class="o">=</span>docker-compose.yaml
+
+<span class="c"># Сервис по умолчанию (например, app)</span>
+<span class="nv">SERVICE</span><span class="w"> </span><span class="o">?=</span><span class="w"> </span>app
+
+<span class="c"># Список всех доступных задач</span>
+<span class="nf">.PHONY</span><span class="o">:</span><span class="w"> </span><span class="n">help</span> <span class="n">up</span> <span class="n">down</span> <span class="n">restart</span> <span class="n">build</span> <span class="n">rebuild</span> <span class="n">logs</span> <span class="n">bash</span> <span class="n">prune</span> <span class="n">docs</span>-<span class="n">clean</span> <span class="n">docs</span>-<span class="n">html</span>
+
+<span class="c"># =============================================</span>
+<span class="c"># 📌 ОСНОВНЫЕ КОМАНДЫ</span>
+<span class="c"># =============================================</span>
+
+<span class="c"># ▶️ Запуск контейнеров в фоне</span>
+<span class="c"># Используй после сборки или при старте проекта</span>
+<span class="nf">up</span><span class="o">:</span>
+<span class="w">	</span>docker-compose<span class="w"> </span>-f<span class="w"> </span><span class="k">$(</span>COMPOSE_FILE<span class="k">)</span><span class="w"> </span>up<span class="w"> </span>-d
+
+<span class="c"># ⛔ Остановить все контейнеры проекта</span>
+<span class="c"># Не удаляет образы и данные</span>
+<span class="nf">down</span><span class="o">:</span>
+<span class="w">	</span>docker-compose<span class="w"> </span>-f<span class="w"> </span><span class="k">$(</span>COMPOSE_FILE<span class="k">)</span><span class="w"> </span>down
+
+<span class="c"># 🔁 Перезапустить контейнеры без пересборки</span>
+<span class="c"># Полезно, если изменился код, но не зависимости</span>
+<span class="nf">restart</span><span class="o">:</span>
+<span class="w">	</span><span class="k">$(</span>MAKE<span class="k">)</span><span class="w"> </span>down
+<span class="w">	</span><span class="k">$(</span>MAKE<span class="k">)</span><span class="w"> </span>up
+
+<span class="c"># 🔨 Пересобрать образы с нуля + очистка мусора</span>
+<span class="c"># Только для изменений в requirements.txt или Dockerfile</span>
+<span class="nf">build</span><span class="o">:</span>
+<span class="w">	</span>docker-compose<span class="w"> </span>-f<span class="w"> </span><span class="k">$(</span>COMPOSE_FILE<span class="k">)</span><span class="w"> </span>build<span class="w"> </span>--no-cache
+<span class="w">	</span><span class="k">$(</span>MAKE<span class="k">)</span><span class="w"> </span>prune
+
+<span class="c"># 🔁🔄 Полный цикл: остановка → пересборка → запуск</span>
+<span class="c"># Используй, если хочешь всё обновить &quot;от и до&quot;</span>
+<span class="nf">rebuild</span><span class="o">:</span><span class="w"> </span><span class="n">down</span> <span class="n">build</span> <span class="n">up</span>
+
+<span class="c"># 🔍 Просмотр логов в реальном времени</span>
+<span class="nf">logs</span><span class="o">:</span>
+<span class="w">	</span>docker-compose<span class="w"> </span>-f<span class="w"> </span><span class="k">$(</span>COMPOSE_FILE<span class="k">)</span><span class="w"> </span>logs<span class="w"> </span>-f
+
+<span class="c"># 🖥️ Вход внутрь контейнера через bash (или sh)</span>
+<span class="nf">bash</span><span class="o">:</span>
+<span class="w">	</span>docker-compose<span class="w"> </span>-f<span class="w"> </span><span class="k">$(</span>COMPOSE_FILE<span class="k">)</span><span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="k">$(</span>SERVICE<span class="k">)</span><span class="w"> </span>/bin/bash<span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="se">\</span>
+<span class="w">	</span>docker-compose<span class="w"> </span>-f<span class="w"> </span><span class="k">$(</span>COMPOSE_FILE<span class="k">)</span><span class="w"> </span><span class="nb">exec</span><span class="w"> </span><span class="k">$(</span>SERVICE<span class="k">)</span><span class="w"> </span>/bin/sh
+
+<span class="c"># 🗑️ Очистка: удаление остановленных контейнеров и старых образов этого проекта</span>
+<span class="nf">prune</span><span class="o">:</span>
+<span class="w">	</span>docker-compose<span class="w"> </span>-f<span class="w"> </span><span class="k">$(</span>COMPOSE_FILE<span class="k">)</span><span class="w"> </span>down<span class="w"> </span>--rmi<span class="w"> </span><span class="nb">local</span><span class="w"> </span>--volumes
+
+<span class="c"># Очистка сгенерированной документации</span>
+<span class="nf">docs-clean</span><span class="o">:</span>
+<span class="w">	</span>.<span class="se">\d</span>ocs<span class="se">\m</span>ake.bat<span class="w"> </span>clean
+
+<span class="c"># Сборка HTML-документации</span>
+<span class="nf">docs-html</span><span class="o">:</span>
+<span class="w">	</span>.<span class="se">\d</span>ocs<span class="se">\m</span>ake.bat<span class="w"> </span>html
+
+<span class="c"># =============================================</span>
+<span class="c"># 💡 ПАМЯТКА: Какие команды когда использовать</span>
+<span class="c"># =============================================</span>
+
+<span class="c"># 🟢 При первом запуске или после изменений в окружении:</span>
+<span class="c"># make up</span>
+
+<span class="c"># 🟡 После изменений в коде (не в зависимостях):</span>
+<span class="c"># make restart</span>
+
+<span class="c"># 🔵 После изменений в requirements.txt или Dockerfile:</span>
+<span class="c"># make build</span>
+
+<span class="c"># 🔴 Чтобы всё пересобрать &quot;с нуля&quot; и полностью перезапустить:</span>
+<span class="c"># make rebuild</span>
+
+<span class="c"># 🟣 Чтобы посмотреть логи:</span>
+<span class="c"># make logs</span>
+
+<span class="c"># 🟠 Чтобы залезть внутрь контейнера:</span>
+<span class="c"># make bash</span>
+
+<span class="c"># ⚫ Чтобы освободить место на диске:</span>
+<span class="c"># make prune</span>
+
+<span class="c"># 🟤 Для справки:</span>
+<span class="nf">help</span><span class="o">:</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;📌 Доступные команды:&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;  make up            ➜ Запустить контейнеры&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;  make down          ➜ Остановить контейнеры&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;  make restart       ➜ Перезапустить (без пересборки)&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;  make build         ➜ Пересобрать образы с нуля&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;  make rebuild       ➜ Полный цикл: down → build → up&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;  make logs          ➜ Посмотреть логи&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;  make bash          ➜ Войти в контейнер&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;  make prune         ➜ Почистить старые данные&quot;</span>
+<span class="w">	</span>@echo<span class="w"> </span><span class="s2">&quot;  make help          ➜ Эта справка&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id6">
+<div class="code-block-caption"><span class="caption-text">requirements.txt</span><a class="headerlink" href="#id6" title="Ссылка на этот код"></a></div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span># для вывода цветных логов
+colorama
+
+# работа с .env
+environs
+
+# Поддержка markdown
+myst-parser
+
+# для проверки кода перед коммитом (линтеры, форматирование итд)
+pre-commit
+
+# для автоматической генерации документации при помощи sphinx
+sphinx
+sphinx-autodoc-typehints
+sphinx-copybutton
+sphinx-intl
+sphinxcontrib-plantuml
+sphinx-rtd-theme
+</pre></div>
+</div>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Нижняя область">
+        <a href="readme.html" class="btn btn-neutral float-left" title="Описание" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Предыдущая</a>
+        <a href="commit_style_guide.html" class="btn btn-neutral float-right" title="Руководство по написанию коммитов" accesskey="n" rel="next">Следующая <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2025, gleb. </p>
+  </div>
+
+  Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">темы,</a>
+    предоставленной <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

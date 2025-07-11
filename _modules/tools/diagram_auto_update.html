@@ -1,0 +1,290 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>tools.diagram_auto_update &mdash; документация projectTemplate 0.1</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=490fdf2e"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../_static/translations.js?v=cd1d70c9"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            projectTemplate
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">Описание</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html#id2">Установка</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../src.html">Исходный код</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../src.html#id2">🛠 Конфигурационные файлы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commit_style_guide.html">Руководство по написанию коммитов</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">projectTemplate</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Код модуля</a></li>
+      <li class="breadcrumb-item active">tools.diagram_auto_update</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Исходный код tools.diagram_auto_update</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Модуль для автоматического обновления диаграммы зависимостей.</span>
+
+<span class="sd">Скрипт анализирует новые файлы в репозитории и генерирует PlantUML диаграмму,</span>
+<span class="sd">отображающую структуру проекта с возможностью перехода к файлам через vscode:// ссылки.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">subprocess</span>  <span class="c1"># nosec B404</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="c1"># Пути к корневой директории исходного кода и директории с диаграммами</span>
+<span class="n">BASE_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">resolve</span><span class="p">()</span>
+<span class="n">SRC_DIR</span> <span class="o">=</span> <span class="n">BASE_DIR</span> <span class="o">/</span> <span class="s2">&quot;src&quot;</span>
+<span class="n">DIAGRAMS_DIR</span> <span class="o">=</span> <span class="n">BASE_DIR</span> <span class="o">/</span> <span class="s2">&quot;diagrams&quot;</span>
+<span class="n">OUTPUT_FILE</span> <span class="o">=</span> <span class="n">DIAGRAMS_DIR</span> <span class="o">/</span> <span class="s2">&quot;temp_containers.puml&quot;</span>
+
+<span class="c1"># Настройки отображения для файлов по расширениям:</span>
+<span class="c1"># (Человеческое имя типа файла, имя спрайта PlantUML, тег в диаграмме)</span>
+<span class="n">EXT_SETTINGS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;.py&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;Python&quot;</span><span class="p">,</span> <span class="s2">&quot;python&quot;</span><span class="p">,</span> <span class="s2">&quot;code&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;.js&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;JavaScript&quot;</span><span class="p">,</span> <span class="s2">&quot;javascript&quot;</span><span class="p">,</span> <span class="s2">&quot;code&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;.ts&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;TypeScript&quot;</span><span class="p">,</span> <span class="s2">&quot;typescript&quot;</span><span class="p">,</span> <span class="s2">&quot;code&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;.json&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;JSON&quot;</span><span class="p">,</span> <span class="s2">&quot;json&quot;</span><span class="p">,</span> <span class="s2">&quot;config&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;.yaml&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;YAML&quot;</span><span class="p">,</span> <span class="s2">&quot;yaml&quot;</span><span class="p">,</span> <span class="s2">&quot;config&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;.yml&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;YAML&quot;</span><span class="p">,</span> <span class="s2">&quot;yaml&quot;</span><span class="p">,</span> <span class="s2">&quot;config&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;.txt&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;Text&quot;</span><span class="p">,</span> <span class="s2">&quot;text&quot;</span><span class="p">,</span> <span class="s2">&quot;docs&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;.md&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;Markdown&quot;</span><span class="p">,</span> <span class="s2">&quot;markdown&quot;</span><span class="p">,</span> <span class="s2">&quot;docs&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;.ipynb&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;Notebook&quot;</span><span class="p">,</span> <span class="s2">&quot;jupyter&quot;</span><span class="p">,</span> <span class="s2">&quot;notebook&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;.html&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;HTML&quot;</span><span class="p">,</span> <span class="s2">&quot;html&quot;</span><span class="p">,</span> <span class="s2">&quot;web&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;.css&quot;</span><span class="p">:</span> <span class="p">(</span><span class="s2">&quot;CSS&quot;</span><span class="p">,</span> <span class="s2">&quot;css&quot;</span><span class="p">,</span> <span class="s2">&quot;web&quot;</span><span class="p">),</span>
+<span class="p">}</span>
+
+
+<div class="viewcode-block" id="get_changed_files">
+<a class="viewcode-back" href="../../src.html#tools.diagram_auto_update.get_changed_files">[документация]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">get_changed_files</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Получает список новых (неотслеживаемых) файлов в репозитории Git.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        List[str]: Список относительных путей к новым файлам.</span>
+
+<span class="sd">    Note:</span>
+<span class="sd">        Использует `git ls-files --others --exclude-standard` для получения списка файлов.</span>
+<span class="sd">        Валидация пути выполняется в вызывающем коде.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">run</span><span class="p">(</span>  <span class="c1"># nosec B603, B607</span>
+            <span class="p">[</span><span class="s2">&quot;git&quot;</span><span class="p">,</span> <span class="s2">&quot;ls-files&quot;</span><span class="p">,</span> <span class="s2">&quot;--others&quot;</span><span class="p">,</span> <span class="s2">&quot;--exclude-standard&quot;</span><span class="p">],</span>
+            <span class="n">stdout</span><span class="o">=</span><span class="n">subprocess</span><span class="o">.</span><span class="n">PIPE</span><span class="p">,</span>
+            <span class="n">text</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+            <span class="n">cwd</span><span class="o">=</span><span class="n">BASE_DIR</span><span class="p">,</span>
+            <span class="n">check</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">files</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">result</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span>
+        <span class="p">]</span>
+        <span class="k">return</span> <span class="n">files</span>
+    <span class="k">except</span> <span class="n">subprocess</span><span class="o">.</span><span class="n">CalledProcessError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Error getting changed files: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="p">[]</span></div>
+
+
+
+<div class="viewcode-block" id="build_container_definitions">
+<a class="viewcode-back" href="../../src.html#tools.diagram_auto_update.build_container_definitions">[документация]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">build_container_definitions</span><span class="p">(</span><span class="n">added_files</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Обрабатывает список добавленных файлов и возвращает определения для диаграммы.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        added_files (List[str]): Список относительных путей к добавленным файлам.</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tuple[List[str], Dict]: Кортеж содержащий:</span>
+<span class="sd">            - Список строк с определениями vscode-ссылок</span>
+<span class="sd">            - Словарь с иерархией папок и файлов для генерации PlantUML</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">defines</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">boundaries</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">for</span> <span class="n">filepath</span> <span class="ow">in</span> <span class="n">added_files</span><span class="p">:</span>
+        <span class="n">full_path</span> <span class="o">=</span> <span class="n">BASE_DIR</span> <span class="o">/</span> <span class="n">filepath</span>
+
+        <span class="c1"># Фильтруем только файлы внутри src, которые реально существуют</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">filepath</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s2">&quot;src/&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">full_path</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="k">continue</span>
+
+        <span class="c1"># Игнорируем служебные файлы Python</span>
+        <span class="k">if</span> <span class="n">full_path</span><span class="o">.</span><span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;__init__.py&quot;</span><span class="p">:</span>
+            <span class="k">continue</span>
+
+        <span class="n">ext</span> <span class="o">=</span> <span class="n">full_path</span><span class="o">.</span><span class="n">suffix</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="n">file_type</span><span class="p">,</span> <span class="n">sprite</span><span class="p">,</span> <span class="n">tag</span> <span class="o">=</span> <span class="n">EXT_SETTINGS</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">ext</span><span class="p">,</span> <span class="p">(</span><span class="s2">&quot;File&quot;</span><span class="p">,</span> <span class="s2">&quot;file&quot;</span><span class="p">,</span> <span class="s2">&quot;other&quot;</span><span class="p">))</span>
+
+        <span class="c1"># Получаем относительный путь от корня проекта</span>
+        <span class="n">rel_path</span> <span class="o">=</span> <span class="n">full_path</span><span class="o">.</span><span class="n">relative_to</span><span class="p">(</span><span class="n">BASE_DIR</span><span class="p">)</span>
+        <span class="n">parts</span> <span class="o">=</span> <span class="n">rel_path</span><span class="o">.</span><span class="n">parts</span>  <span class="c1"># (&#39;src&#39;, &#39;subdir&#39;, &#39;file.py&#39;)</span>
+
+        <span class="c1"># Формируем уникальный идентификатор и vscode-ссылку (без жёсткого C:/)</span>
+        <span class="n">var_name</span> <span class="o">=</span> <span class="p">(</span><span class="n">full_path</span><span class="o">.</span><span class="n">stem</span> <span class="o">+</span> <span class="s2">&quot;_&quot;</span> <span class="o">+</span> <span class="n">ext</span><span class="o">.</span><span class="n">lstrip</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">))</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="n">var_const</span> <span class="o">=</span> <span class="n">var_name</span><span class="o">.</span><span class="n">upper</span><span class="p">()</span>
+        <span class="n">vscode_link</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;vscode://file/</span><span class="si">{</span><span class="n">rel_path</span><span class="o">.</span><span class="n">as_posix</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+        <span class="n">defines</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;!define </span><span class="si">{</span><span class="n">var_const</span><span class="si">}</span><span class="s1"> &quot;</span><span class="si">{</span><span class="n">vscode_link</span><span class="si">}</span><span class="s1">&quot;&#39;</span><span class="p">)</span>
+
+        <span class="c1"># Строим иерархию папок: src/.../папка/файл</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="n">boundaries</span>
+        <span class="k">for</span> <span class="n">part</span> <span class="ow">in</span> <span class="n">parts</span><span class="p">[</span><span class="mi">1</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]:</span>  <span class="c1"># пропускаем &quot;src&quot;, идём по папкам</span>
+            <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="n">part</span><span class="p">,</span> <span class="p">{})</span>
+        <span class="n">current</span><span class="o">.</span><span class="n">setdefault</span><span class="p">(</span><span class="s2">&quot;files&quot;</span><span class="p">,</span> <span class="p">[])</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
+            <span class="p">(</span><span class="n">parts</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">var_name</span><span class="p">,</span> <span class="n">file_type</span><span class="p">,</span> <span class="n">sprite</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">var_const</span><span class="p">)</span>
+        <span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">defines</span><span class="p">,</span> <span class="n">boundaries</span></div>
+
+
+
+<div class="viewcode-block" id="write_container_block">
+<a class="viewcode-back" href="../../src.html#tools.diagram_auto_update.write_container_block">[документация]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">write_container_block</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">content</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Рекурсивно записывает блок Container_Boundary и файлы внутри него.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        f: Файловый объект для записи.</span>
+<span class="sd">        name (str): Имя текущего контейнера.</span>
+<span class="sd">        content (Dict): Содержимое контейнера (подпапки и файлы).</span>
+<span class="sd">        indent (int): Уровень отступа для форматирования.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">space</span> <span class="o">=</span> <span class="s2">&quot; &quot;</span> <span class="o">*</span> <span class="n">indent</span>
+
+    <span class="c1"># Записываем файлы в текущей папке</span>
+    <span class="k">if</span> <span class="s2">&quot;files&quot;</span> <span class="ow">in</span> <span class="n">content</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">filename</span><span class="p">,</span> <span class="n">var_name</span><span class="p">,</span> <span class="n">file_type</span><span class="p">,</span> <span class="n">sprite</span><span class="p">,</span> <span class="n">tag</span><span class="p">,</span> <span class="n">var_const</span> <span class="ow">in</span> <span class="n">content</span><span class="p">[</span><span class="s2">&quot;files&quot;</span><span class="p">]:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">space</span><span class="si">}</span><span class="s1">    Container(</span><span class="si">{</span><span class="n">var_name</span><span class="si">}</span><span class="s1">, &quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">&quot;, &quot;</span><span class="si">{</span><span class="n">file_type</span><span class="si">}</span><span class="s1">&quot;, &#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;&quot;</span><span class="si">{</span><span class="n">filename</span><span class="si">}</span><span class="s1">&quot;, $tags=&quot;</span><span class="si">{</span><span class="n">tag</span><span class="si">}</span><span class="s1">&quot;, $sprite=&quot;</span><span class="si">{</span><span class="n">sprite</span><span class="si">}</span><span class="s1">&quot;, &#39;</span>
+                <span class="sa">f</span><span class="s1">&#39;$link=&quot;</span><span class="si">{</span><span class="n">var_const</span><span class="si">}</span><span class="s1">&quot;)</span><span class="se">\n</span><span class="s1">&#39;</span>
+            <span class="p">)</span>
+
+    <span class="c1"># Рекурсивно обрабатываем подпапки</span>
+    <span class="k">for</span> <span class="n">subfolder</span><span class="p">,</span> <span class="n">subcontent</span> <span class="ow">in</span> <span class="n">content</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="n">subfolder</span> <span class="o">==</span> <span class="s2">&quot;files&quot;</span><span class="p">:</span>
+            <span class="k">continue</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">space</span><span class="si">}</span><span class="s1">    Container_Boundary(</span><span class="si">{</span><span class="n">subfolder</span><span class="si">}</span><span class="s1">, &quot;</span><span class="si">{</span><span class="n">subfolder</span><span class="si">}</span><span class="s1">&quot;, $tags=&quot;code&quot;) </span><span class="se">{{\n</span><span class="s1">&#39;</span>
+        <span class="p">)</span>
+        <span class="n">write_container_block</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="n">subfolder</span><span class="p">,</span> <span class="n">subcontent</span><span class="p">,</span> <span class="n">indent</span> <span class="o">+</span> <span class="mi">4</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">space</span><span class="si">}</span><span class="s2">    </span><span class="se">}}\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="write_temp_puml">
+<a class="viewcode-back" href="../../src.html#tools.diagram_auto_update.write_temp_puml">[документация]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">write_temp_puml</span><span class="p">(</span><span class="n">defines</span><span class="p">,</span> <span class="n">boundaries</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Генерирует временный .puml файл с определениями ссылок и иерархией компонентов.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        defines (List[str]): Список определений vscode-ссылок.</span>
+<span class="sd">        boundaries (Dict): Иерархия папок и файлов проекта.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">DIAGRAMS_DIR</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Создаём папку, если нет</span>
+
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">OUTPUT_FILE</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;@startuml</span><span class="se">\n\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Вставляем все !define ссылки</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">defines</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">Container_Boundary(src, &quot;src (исходный код)&quot;, $tags=&quot;code&quot;) {</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+        <span class="n">write_container_block</span><span class="p">(</span><span class="n">f</span><span class="p">,</span> <span class="s2">&quot;src&quot;</span><span class="p">,</span> <span class="n">boundaries</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s2">&quot;}</span><span class="se">\n\n</span><span class="s2">@enduml</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Основная точка входа скрипта.&quot;&quot;&quot;</span>
+    <span class="n">added_files</span> <span class="o">=</span> <span class="n">get_changed_files</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Changed files detected:&quot;</span><span class="p">,</span> <span class="n">added_files</span><span class="p">)</span>  <span class="c1"># Для отладки</span>
+
+    <span class="n">defines</span><span class="p">,</span> <span class="n">boundaries</span> <span class="o">=</span> <span class="n">build_container_definitions</span><span class="p">(</span><span class="n">added_files</span><span class="p">)</span>
+    <span class="n">write_temp_puml</span><span class="p">(</span><span class="n">defines</span><span class="p">,</span> <span class="n">boundaries</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Generated PlantUML diagram at </span><span class="si">{</span><span class="n">OUTPUT_FILE</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2025, gleb. </p>
+  </div>
+
+  Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">темы,</a>
+    предоставленной <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

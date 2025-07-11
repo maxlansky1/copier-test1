@@ -1,0 +1,207 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="ru" data-content_root="../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>configs.path_manager &mdash; документация projectTemplate 0.1</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=e59714d7" />
+      <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+
+  
+      <script src="../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../_static/documentation_options.js?v=490fdf2e"></script>
+      <script src="../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+      <script src="../../_static/copybutton.js?v=f281be69"></script>
+      <script src="../../_static/translations.js?v=cd1d70c9"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="../../genindex.html" />
+    <link rel="search" title="Поиск" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            projectTemplate
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Поиск в документации" aria-label="Поиск в документации" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Меню навигации">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html">Описание</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../readme.html#id2">Установка</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../src.html">Исходный код</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../src.html#id2">🛠 Конфигурационные файлы</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../commit_style_guide.html">Руководство по написанию коммитов</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Меню навигации для мобильных устройств" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">projectTemplate</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Навигация по страницам">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Код модуля</a></li>
+      <li class="breadcrumb-item active">configs.path_manager</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Исходный код configs.path_manager</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Модуль path_manager предоставляет централизованный доступ ко всем ключевым путям проекта.</span>
+
+<span class="sd">Все пути представлены как объекты Path из библиотеки pathlib для переносимости и удобства.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="c1"># === Определение корня проекта ===</span>
+<span class="n">PROJECT_ROOT</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span><span class="o">.</span><span class="n">parent</span>
+
+
+<span class="c1"># === Базовые директории проекта ===</span>
+<span class="n">CONFIGS_DIR</span> <span class="o">=</span> <span class="n">PROJECT_ROOT</span> <span class="o">/</span> <span class="s2">&quot;configs&quot;</span>
+<span class="n">DIAGRAMS_DIR</span> <span class="o">=</span> <span class="n">PROJECT_ROOT</span> <span class="o">/</span> <span class="s2">&quot;diagrams&quot;</span>
+<span class="n">DOCS_DIR</span> <span class="o">=</span> <span class="n">PROJECT_ROOT</span> <span class="o">/</span> <span class="s2">&quot;docs&quot;</span>
+<span class="n">LOGS_DIR</span> <span class="o">=</span> <span class="n">PROJECT_ROOT</span> <span class="o">/</span> <span class="s2">&quot;logs&quot;</span>
+<span class="n">NOTES_DIR</span> <span class="o">=</span> <span class="n">PROJECT_ROOT</span> <span class="o">/</span> <span class="s2">&quot;notes&quot;</span>
+<span class="n">SRC_DIR</span> <span class="o">=</span> <span class="n">PROJECT_ROOT</span> <span class="o">/</span> <span class="s2">&quot;src&quot;</span>
+<span class="n">TESTS_DIR</span> <span class="o">=</span> <span class="n">PROJECT_ROOT</span> <span class="o">/</span> <span class="s2">&quot;tests&quot;</span>
+<span class="n">TOOLS_DIR</span> <span class="o">=</span> <span class="n">PROJECT_ROOT</span> <span class="o">/</span> <span class="s2">&quot;tools&quot;</span>
+
+
+<span class="c1"># === Файлы верхнего уровня ===</span>
+<span class="n">DOCKERFILE_PATH</span> <span class="o">=</span> <span class="n">PROJECT_ROOT</span> <span class="o">/</span> <span class="s2">&quot;Dockerfile&quot;</span>
+<span class="n">MAKEFILE_PATH</span> <span class="o">=</span> <span class="n">PROJECT_ROOT</span> <span class="o">/</span> <span class="s2">&quot;Makefile&quot;</span>
+<span class="n">README_PATH</span> <span class="o">=</span> <span class="n">PROJECT_ROOT</span> <span class="o">/</span> <span class="s2">&quot;README.md&quot;</span>
+<span class="n">REQUIREMENTS_PATH</span> <span class="o">=</span> <span class="n">PROJECT_ROOT</span> <span class="o">/</span> <span class="s2">&quot;requirements.txt&quot;</span>
+<span class="n">DOCKER_COMPOSE_PATH</span> <span class="o">=</span> <span class="n">PROJECT_ROOT</span> <span class="o">/</span> <span class="s2">&quot;docker-compose.yaml&quot;</span>
+<span class="n">GITHUB_WORKFLOWS_DIR</span> <span class="o">=</span> <span class="n">PROJECT_ROOT</span> <span class="o">/</span> <span class="s2">&quot;.github&quot;</span> <span class="o">/</span> <span class="s2">&quot;workflows&quot;</span>
+
+
+<span class="c1"># === Поддиректории src/ ===</span>
+<span class="n">SRC_UTILS_DIR</span> <span class="o">=</span> <span class="n">SRC_DIR</span> <span class="o">/</span> <span class="s2">&quot;utils&quot;</span>
+<span class="n">SRC_API_DIR</span> <span class="o">=</span> <span class="n">SRC_DIR</span> <span class="o">/</span> <span class="s2">&quot;api&quot;</span>
+<span class="n">SRC_DB_DIR</span> <span class="o">=</span> <span class="n">SRC_DIR</span> <span class="o">/</span> <span class="s2">&quot;db&quot;</span>
+<span class="n">SRC_LOGS_DIR</span> <span class="o">=</span> <span class="n">SRC_DIR</span> <span class="o">/</span> <span class="s2">&quot;logs&quot;</span>
+<span class="n">MAIN_PY_PATH</span> <span class="o">=</span> <span class="n">SRC_DIR</span> <span class="o">/</span> <span class="s2">&quot;main.py&quot;</span>
+
+
+<span class="c1"># === Конкретные файлы проекта ===</span>
+<span class="n">CONFIG_PY_PATH</span> <span class="o">=</span> <span class="n">CONFIGS_DIR</span> <span class="o">/</span> <span class="s2">&quot;config.py&quot;</span>
+<span class="n">PATH_MANAGER_PY_PATH</span> <span class="o">=</span> <span class="n">CONFIGS_DIR</span> <span class="o">/</span> <span class="s2">&quot;path_manager.py&quot;</span>
+
+<span class="n">PROJECT_STRUCTURE_PUML_PATH</span> <span class="o">=</span> <span class="n">DIAGRAMS_DIR</span> <span class="o">/</span> <span class="s2">&quot;project_structure.puml&quot;</span>
+<span class="n">PROJECT_STRUCTURE_SVG_PATH</span> <span class="o">=</span> <span class="n">DIAGRAMS_DIR</span> <span class="o">/</span> <span class="s2">&quot;project_structure.svg&quot;</span>
+<span class="n">TEMP_CONTAINERS_PUML_PATH</span> <span class="o">=</span> <span class="n">DIAGRAMS_DIR</span> <span class="o">/</span> <span class="s2">&quot;temp_containers.puml&quot;</span>
+
+<span class="n">TEST_MAIN_PY_PATH</span> <span class="o">=</span> <span class="n">TESTS_DIR</span> <span class="o">/</span> <span class="s2">&quot;test_main.py&quot;</span>
+
+<span class="n">DIAGRAM_AUTO_UPDATE_SCRIPT</span> <span class="o">=</span> <span class="n">TOOLS_DIR</span> <span class="o">/</span> <span class="s2">&quot;diagram_auto_update.py&quot;</span>
+<span class="n">PRINT_STRUCTURE_SCRIPT</span> <span class="o">=</span> <span class="n">TOOLS_DIR</span> <span class="o">/</span> <span class="s2">&quot;print_structure.py&quot;</span>
+
+
+<span class="c1"># === Переменные окружения для переопределения путей (опционально) ===</span>
+<span class="n">LOGS_DIR_ENV</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">getenv</span><span class="p">(</span><span class="s2">&quot;PROJECT_LOGS_DIR&quot;</span><span class="p">)</span>
+<span class="k">if</span> <span class="n">LOGS_DIR_ENV</span><span class="p">:</span>
+    <span class="n">LOGS_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">LOGS_DIR_ENV</span><span class="p">)</span>
+
+
+<span class="c1"># === Функция проверки и создания ключевых директорий ===</span>
+<div class="viewcode-block" id="ensure_directories">
+<a class="viewcode-back" href="../../src.html#configs.path_manager.ensure_directories">[документация]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">ensure_directories</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Создаёт необходимые директории, если они отсутствуют.</span>
+
+<span class="sd">    Выводит информационное сообщение в stdout.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">LOGS_DIR</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;[INFO] Убедились, что существует директория: </span><span class="si">{</span><span class="n">LOGS_DIR</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># === Функция вывода всех известных путей ===</span>
+<div class="viewcode-block" id="print_project_paths">
+<a class="viewcode-back" href="../../src.html#configs.path_manager.print_project_paths">[документация]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">print_project_paths</span><span class="p">():</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Выводит все определённые пути в терминал для дебага и проверки.</span>
+
+<span class="sd">    Outputs:</span>
+<span class="sd">        Выводит в stdout список всех путей, определённых как глобальные переменные</span>
+<span class="sd">        в верхнем регистре, которые являются экземплярами Path.</span>
+
+<span class="sd">    Format:</span>
+<span class="sd">        Вывод включает разделители &quot;===&quot; перед и после списка путей.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">=== Project Paths ===&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="nb">globals</span><span class="p">()</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">Path</span><span class="p">)</span> <span class="ow">and</span> <span class="n">name</span><span class="o">.</span><span class="n">isupper</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2"> = </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=====================&quot;</span><span class="p">)</span></div>
+
+
+
+<span class="c1"># === Если запускается как скрипт — выводим все пути ===</span>
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s2">&quot;__main__&quot;</span><span class="p">:</span>
+    <span class="n">print_project_paths</span><span class="p">()</span>
+    <span class="n">ensure_directories</span><span class="p">()</span>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Авторские права 2025, gleb. </p>
+  </div>
+
+  Собрано при помощи <a href="https://www.sphinx-doc.org/">Sphinx</a> с использованием
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">темы,</a>
+    предоставленной <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
