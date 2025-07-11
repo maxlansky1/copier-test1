@@ -31,3 +31,6 @@ _exclude:
 _defaults: false  
 
 _vcs_ref: "main"  
+
+# Configure jinja2 defaults to make syntax highlighters lives easier
+_templates_suffix: .jinja
